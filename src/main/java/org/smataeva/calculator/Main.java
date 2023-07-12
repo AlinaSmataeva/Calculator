@@ -1,33 +1,42 @@
 package main.java.org.smataeva.calculator;
 
+import main.java.org.smataeva.calculator.utils.Calculator;
+import main.java.org.smataeva.calculator.utils.Utils;
+
 import java.util.Scanner;
 
 public class Main {
-
     public static void main(String[] args) {
         Calculator calculator = new Calculator();
         Scanner scanner = new Scanner(System.in);
-
         System.out.println("Введите операцию, где 1 - сумма, 2 - вычитание, 3 - умножение, 4 - деление:  ");
-        int operation = scanner.nextInt();
+        String operation = scanner.next();
+        Utils.processInputOperation(operation);
+            if(!Utils.processInputOperation(operation)){
+                System.out.println("Операция должна быть числом от 1 до 4");
+                return;
+           }
         double res = 0;
-
-        System.out.println(res);
+        double num1 = 0;
+        double num2 = 0;
 
         System.out.println("Введите первое число: ");
-        if(!scanner.hasNextInt()& !scanner.hasNextDouble()){
-            System.out.println("Введен недопустимый тип данных");
+        try {
+            num1 = Utils.processInput();
+        } catch (Exception e) {
+            System.out.println("Вы ввели некорретктное число.");
+            return;
         }
-        double num1 = scanner.nextDouble();
-        //double num1 = scanner.nextDouble();
-
 
         System.out.println("Введите второе число: ");
-        if(!scanner.hasNextInt()& !scanner.hasNextDouble()){
-            System.out.println("Введен недопустимый тип данных");
+        try {
+            num2 = Utils.processInput();
+        } catch (Exception e) {
+            System.out.println("Вы ввели некорретктное число.");
+            return;
         }
-            double num2 = scanner.nextDouble();
-        switch (operation) {
+
+        switch (Integer.parseInt(operation)) {
             case 1:
                 res = calculator.sum(num1, num2);
                 break;
@@ -42,14 +51,9 @@ public class Main {
                 break;
             default:
                 System.out.println("Неверно введена операция");
+                return;
         }
 
         System.out.print("Результат: " + res);
-
-
-
-
-
-
     }
 }
